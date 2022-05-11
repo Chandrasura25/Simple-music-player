@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <section>
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="color"></div>
+        <div class="box">
+            <div class="square" style="--i:0;"></div>
+            <div class="square" style="--i:1;"></div>
+            <div class="square" style="--i:2;"></div>
+            <div class="square" style="--i:3;"></div>
+            <div class="square" style="--i:4;"></div>
+            <div class="music">
+                <h2 class="title">Music Name</h2>
+                <div class="player">
+                <audio src=""></audio>
+             <div class="btns">
+              <span class="prev"><ion-icon name="play-back-outline"></ion-icon></span>
+              <span class="playPause"><ion-icon name="play-outline"></ion-icon></span>
+              <span class="next"><ion-icon name="play-forward-outline"></ion-icon></span> 
+             </div>
+            </div>
+         </div> 
+       </div>
+  </section>
+  <script>
+      const title = document.querySelector('.title');
+      const prev = document.querySelector('.prev');
+      const playPause = document.querySelector('.playPause');
+      const next = document.querySelector('.next');
+      const audio = document.querySelector('audio');
+
+      const songList =[{
+          path:'./musicList/01 - Kar Gayi Chull.mp3',
+          songName:"Kar Gayi Chull"
+           },{
+          path:'./musicList/01.Radhe Shyam Teaser.mp3',
+          songName:"Radhe Shyam Teaser"
+           },{
+          path:'./musicList/[iSongs.info] 01 - Ee Raathale.mp3',
+          songName:"Ee Raathale"
+          },{
+          path:'./musicList/02 Sun Saathiya (ABCD 2) Divya Kumar 190kbps.mp3',
+          songName:"Sun Saathiya"
+          },{
+          path:'./musicList/Barry-Jhay-Go-Down.mp3',
+          songName:"Go Down"
+          },{
+          path:'./musicList/Barry_Jhay_-_Ma_So_Pe_NaijaMusic.com.ng.mp3',
+          songName:"Ma So Pe"
+          },{
+          path:'./musicList/Dum Dum.mp3',
+          songName:"Dum Dum"
+          },{
+          path:'./musicList/Manasa - SenSongsMp3.Co.mp3',
+          songName:"Manasa"
+          },{
+          path:'./musicList/Kizz-Daniel-Pak-N-Go.mp3',
+          songName:"Pak-N-Go"
+          }
+        ]
+      let song_Playing = false;
+      playSong =()=>{
+          song_Playing= true;
+          audio.play();
+          playPause.classList.add('active');
+          playPause.innerHTML='<ion-icon name="pause-outline"></ion-icon>'
+      }
+      pauseSong =()=>{
+          song_Playing= false;
+          audio.pause();
+          playPause.classList.remove('active');
+          playPause.innerHTML='<ion-icon name="play-outline"></ion-icon>'
+      }
+      playPause.addEventListener('click',()=>(song_Playing? pauseSong(): playSong()));
+      loadSong = (songList)=>{
+          title.textContent = songList.songName;
+          audio.src = songList.path;
+      }
+      let i = 2;
+      loadSong(songList[i]);
+      prevSong=()=>{
+       i--;
+       if(i<0){
+           i = songList.length-1;
+       } 
+       loadSong(songList[i]);
+       playSong();  
+      }
+      prev.addEventListener('click',prevSong);
+      nextSong=()=>{
+       i++;
+       if(i>songList.length - 1){
+           i = 0;
+       } 
+       loadSong(songList[i]);
+       playSong();  
+      }
+      next.addEventListener('click',nextSong);
+  </script> 
+</body>
+</html>
